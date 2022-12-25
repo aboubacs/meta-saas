@@ -31,3 +31,8 @@ def test_should_raise_if_instance_does_not_exist(users_repository, command):
     command.instance_id = "unknown"
     with pytest.raises(InstanceDoesNotExist):
         register_user(command)
+
+
+def test_should_emit_user_created_event(message_bus, command):
+    register_user(command)
+    assert message_bus.messages

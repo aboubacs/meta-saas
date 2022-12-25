@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from dependency_injector import providers
 
 from src.infrastructure.container import Container
-from src.infrastructure.database.instances_postgres_json_repository import InstancesPostgresJsonRepository
+from src.infrastructure.storage.database.instances_postgres_json_repository import InstancesPostgresJsonRepository
 
 
 def setup_live_container(container: Container):

@@ -18,10 +18,10 @@ class UsersRepository(abc.ABC):
         pass
 
 
-class UsersRepositoryErrors(Exception):
+class UsersRepositoryExceptions(Exception):
     pass
 
 
-class UserIdAlreadyExists(UsersRepositoryErrors):
+class UserIdAlreadyExists(UsersRepositoryExceptions):
     def __init__(self, user_id: str):
         super().__init__(f"User with id {user_id} already exists")
