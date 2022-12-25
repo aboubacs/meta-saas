@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class Instance:
+class User:
+    instance_id: str
     id: str
-    name: str
+    email: str

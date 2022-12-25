@@ -1,11 +1,12 @@
 import abc
+from typing import Optional
 
 from src.hexagon.models.instance import Instance
 
 
 class InstancesRepository(abc.ABC):
     @abc.abstractmethod
-    def get(self, instance_id: str) -> Instance:
+    def get(self, instance_id: str) -> Optional[Instance]:
         pass
 
     @abc.abstractmethod
@@ -17,10 +18,10 @@ class InstancesRepository(abc.ABC):
         pass
 
 
-class InstancesRepositoryErrors(Exception):
+class InstancesRepositoryExceptions(Exception):
     pass
 
 
-class InstanceAlreadyExists(InstancesRepositoryErrors):
+class InstanceIdAlreadyExists(InstancesRepositoryExceptions):
     def __init__(self, instance_id: str):
         super().__init__(f"Instance with id {instance_id} already exists")
