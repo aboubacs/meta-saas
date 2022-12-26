@@ -4,6 +4,8 @@ from dependency_injector import providers
 from src.hexagon.models.user import User
 from src.infrastructure.container import Container
 from src.infrastructure.message_bus.in_memory_message_bus import InMemoryMessageBus
+from src.infrastructure.storage.in_memory.in_memory_organization_accounts_repository import \
+    InMemoryOrganizationAccountsRepository
 from src.infrastructure.storage.in_memory.in_memory_organizations_repository import InMemoryOrganizationsRepository
 from src.infrastructure.storage.in_memory.in_memory_users_repository import InMemoryUsersRepository
 from src.infrastructure.setup import setup
@@ -18,6 +20,7 @@ def unit_test_container():
     container.instances_repository = providers.Singleton(InMemoryInstancesRepository)
     container.users_repository = providers.Singleton(InMemoryUsersRepository)
     container.organizations_repository = providers.Singleton(InMemoryOrganizationsRepository)
+    container.organization_accounts_repository = providers.Singleton(InMemoryOrganizationAccountsRepository)
     container.message_bus = providers.Singleton(InMemoryMessageBus)
     container.email_gateway = providers.Singleton(SpyEmailGateway)
     yield container
@@ -42,6 +45,11 @@ def users_repository(test_app):
 @pytest.fixture
 def organizations_repository(test_app):
     return test_app.extra["container"].organizations_repository()
+
+
+@pytest.fixture
+def organization_accounts_repository(test_app):
+    return test_app.extra["container"].organization_accounts_repository()
 
 
 @pytest.fixture
