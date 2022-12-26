@@ -25,3 +25,8 @@ class UsersRepositoryExceptions(Exception):
 class UserIdAlreadyExists(UsersRepositoryExceptions):
     def __init__(self, user_id: str):
         super().__init__(f"User with id {user_id} already exists")
+
+
+class UserEmailTaken(UsersRepositoryExceptions):
+    def __init__(self, email: str):
+        super().__init__(f"User with email {email} already exists")
