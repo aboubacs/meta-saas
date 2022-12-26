@@ -2,15 +2,20 @@
 
 A set of common features for any SaaS application, out of the box, with API integrations.
 
-### Features 
+### Main Features
 
 - User management
   - Authentication
     - Signup/Signin
       - Email/Password
-      - oauth (Google, Facebook, Twitter, Linkedin, Github...)
-    - 2FA
-    - Account recovery
+      - Social logins (Google, Facebook, Twitter, Linkedin, Github...)
+      - Magic links
+    - SSO
+    - MFA
+    - Security measures
+      - Account lockout
+      - New device recognition
+      - Captchas
   - Authorization
     - Roles
     - Permissions
@@ -20,9 +25,11 @@ A set of common features for any SaaS application, out of the box, with API inte
   - Plans
   - Invoicing
 - Analytics
-  - Usage
   - KPIS
   - Dashboards
+  - Audit logs
 - Notifications
   - Email
   - SMS
+  - Webhooks
+
