@@ -1,12 +1,15 @@
+from src.hexagon.events.instance_events import InstanceCreated
 from src.hexagon.events.organization_events import OrganizationCreated
 from src.hexagon.events.user_events import UserRegistered
 from src.hexagon.gateways.message_bus import MessageBus
 from src.hexagon.handlers.emailing import send_activation_email
+from src.hexagon.handlers.instance_handlers import create_default_roles
 from src.hexagon.handlers.organization_account_handlers import create_owner_organization_account
 
 EVENT_HANDLERS = {
     UserRegistered: [send_activation_email],
     OrganizationCreated: [create_owner_organization_account],
+    InstanceCreated: [create_default_roles],
 }
 
 

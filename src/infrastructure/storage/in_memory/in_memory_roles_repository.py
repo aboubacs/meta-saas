@@ -20,10 +20,13 @@ class InMemoryRolesRepository(RolesRepository):
     def add(self, role: Role) -> None:
         if role.id in self.roles:
             raise RoleIdAlreadyExists(role.id)
-        for role in self.roles.values():
-            if role.name == role.name and role.instance_id == role.instance_id:
+        for r in self.roles.values():
+            if r.name == role.name and r.instance_id == role.instance_id:
                 raise RoleNameTaken(role.instance_id, role.name)
         self.roles[role.id] = role
 
     def update(self, role: Role) -> None:
         self.roles[role.id] = role
+
+    def clear(self) -> None:
+        self.roles = {}
