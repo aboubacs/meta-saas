@@ -7,4 +7,7 @@ class User:
     id: str
     email: str
     hashed_password: str
-    verified: bool = False
+    activated: bool = False
+
+    def activate(self):
+        self.activated = True

@@ -14,6 +14,9 @@ def setup(app: FastAPI, container: Container) -> None:
     # Add other controllers here
     # app.include_router(todo_controller.router)
 
+    container.config.jwt_algorithm.from_env("JWT_ALGORITHM", "HS256")
+    container.config.jwt_secret_key.from_env("JWT_SECRET_KEY", "secret")
+
     app.extra["container"] = container
 
     # Inject dependencies
@@ -21,6 +24,8 @@ def setup(app: FastAPI, container: Container) -> None:
         packages=[
             "src.hexagon.use_cases",
             "src.hexagon.handlers",
+            "src.hexagon.gateways",
+            "src.hexagon.services",
         ]
     )
     wiring.wire(container.message_bus())

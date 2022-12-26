@@ -19,7 +19,7 @@ def test_should_register_a_user_in_an_instance(command, instance, users_reposito
     assert user.email == "test-user@email.com"
     assert user.instance_id == instance.id
     assert user.hashed_password is not None
-    assert user.verified is False
+    assert user.activated is False
 
 
 def test_should_raise_if_user_id_exists(command, instance, users_repository):

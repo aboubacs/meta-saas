@@ -10,9 +10,9 @@ from src.infrastructure.setup import setup, setup_live_container
 def init() -> FastAPI:
     container = Container()
 
-    container.configuration.log_level.from_env("LOG_LEVEL", "INFO")
+    container.config.log_level.from_env("LOG_LEVEL", "INFO")
 
-    str_level = container.configuration.log_level()
+    str_level = container.config.log_level()
     numeric_level = getattr(logging, str_level.upper(), None)
     if not isinstance(numeric_level, int):
         raise ValueError("Invalid log level: %s" % str_level)

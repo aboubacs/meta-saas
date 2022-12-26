@@ -7,7 +7,7 @@ from src.hexagon.gateways.repositories.users_repository import UsersRepository
 
 
 class Container(containers.DeclarativeContainer):
-    configuration = providers.Configuration()
+    config = providers.Configuration()
 
     instances_repository = providers.Dependency(instance_of=InstancesRepository)
     users_repository = providers.Dependency(instance_of=UsersRepository)
