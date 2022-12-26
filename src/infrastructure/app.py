@@ -20,7 +20,6 @@ def init() -> FastAPI:
     logger = logging.getLogger(__name__)
     logger.info("Logging level is set to %s" % str_level.upper())
 
-    # Init API and attach the container
     app = FastAPI()
 
     return app, container

@@ -7,6 +7,7 @@ from src.infrastructure.storage.in_memory.in_memory_users_repository import InMe
 from src.infrastructure.setup import setup
 from src.infrastructure.storage.in_memory.in_memory_instances_repository import InMemoryInstancesRepository
 from src.hexagon.models.instance import Instance
+from tests.fakes.spy_email_gateway import SpyEmailGateway
 
 
 @pytest.fixture
@@ -15,6 +16,7 @@ def unit_test_container():
     container.instances_repository = providers.Singleton(InMemoryInstancesRepository)
     container.users_repository = providers.Singleton(InMemoryUsersRepository)
     container.message_bus = providers.Singleton(InMemoryMessageBus)
+    container.email_gateway = providers.Singleton(SpyEmailGateway)
     yield container
     container.unwire()
 
@@ -37,6 +39,11 @@ def users_repository(test_app):
 @pytest.fixture
 def message_bus(test_app):
     return test_app.extra["container"].message_bus()
+
+
+@pytest.fixture
+def email_gateway(test_app):
+    return test_app.extra["container"].email_gateway()
 
 
 @pytest.fixture

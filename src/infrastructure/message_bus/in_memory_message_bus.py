@@ -9,7 +9,7 @@ class InMemoryMessageBus(MessageBus):
         self.messages = []
         self.handlers = defaultdict(list)
 
-    def register(self, message_type: Type, handler: Callable):
+    def register_handler(self, message_type: Type, handler: Callable):
         self.handlers[message_type].append(handler)
 
     def publish(self, message):

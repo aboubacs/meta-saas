@@ -8,5 +8,5 @@ class MessageBus(abc.ABC):
         ...
 
     @abc.abstractmethod
-    def register(self, message_type: Type, handler: Callable) -> None:
+    def register_handler(self, message_type: Type, handler: Callable) -> None:
         ...

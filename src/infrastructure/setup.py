@@ -3,6 +3,7 @@ from dependency_injector import providers
 
 from src.infrastructure.container import Container
 from src.infrastructure.storage.database.instances_postgres_json_repository import InstancesPostgresJsonRepository
+from src.hexagon.handlers import wiring
 
 
 def setup_live_container(container: Container):
@@ -19,5 +20,7 @@ def setup(app: FastAPI, container: Container) -> None:
     container.wire(
         packages=[
             "src.hexagon.use_cases",
+            "src.hexagon.handlers",
         ]
     )
+    wiring.wire(container.message_bus())
