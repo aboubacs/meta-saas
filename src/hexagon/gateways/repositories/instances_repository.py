@@ -7,15 +7,15 @@ from src.hexagon.models.instance import Instance
 class InstancesRepository(abc.ABC):
     @abc.abstractmethod
     def get(self, instance_id: str) -> Optional[Instance]:
-        pass
+        ...
 
     @abc.abstractmethod
     def add(self, instance: Instance) -> None:
-        pass
+        ...
 
     @abc.abstractmethod
     def update(self, instance: Instance) -> None:
-        pass
+        ...
 
 
 class InstancesRepositoryExceptions(Exception):

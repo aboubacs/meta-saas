@@ -1,8 +1,10 @@
 import pytest
 from dependency_injector import providers
 
+from src.hexagon.models.user import User
 from src.infrastructure.container import Container
 from src.infrastructure.message_bus.in_memory_message_bus import InMemoryMessageBus
+from src.infrastructure.storage.in_memory.in_memory_organizations_repository import InMemoryOrganizationsRepository
 from src.infrastructure.storage.in_memory.in_memory_users_repository import InMemoryUsersRepository
 from src.infrastructure.setup import setup
 from src.infrastructure.storage.in_memory.in_memory_instances_repository import InMemoryInstancesRepository
@@ -15,6 +17,7 @@ def unit_test_container():
     container = Container()
     container.instances_repository = providers.Singleton(InMemoryInstancesRepository)
     container.users_repository = providers.Singleton(InMemoryUsersRepository)
+    container.organizations_repository = providers.Singleton(InMemoryOrganizationsRepository)
     container.message_bus = providers.Singleton(InMemoryMessageBus)
     container.email_gateway = providers.Singleton(SpyEmailGateway)
     yield container
@@ -37,6 +40,11 @@ def users_repository(test_app):
 
 
 @pytest.fixture
+def organizations_repository(test_app):
+    return test_app.extra["container"].organizations_repository()
+
+
+@pytest.fixture
 def message_bus(test_app):
     return test_app.extra["container"].message_bus()
 
@@ -51,3 +59,10 @@ def instance(instances_repository):
     instance = Instance(id="1", name="test-instance")
     instances_repository.add(instance)
     return instance
+
+
+@pytest.fixture
+def user(users_repository, instance):
+    user = User(id="1", email="test-email@email.com", instance_id=instance.id, hashed_password="hashed-password")
+    users_repository.add(user)
+    return user
