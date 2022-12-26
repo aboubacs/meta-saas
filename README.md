@@ -16,10 +16,13 @@ A set of common features for any SaaS application, out of the box, with API inte
       - Account lockout
       - New device recognition
       - Captchas
-  - Authorization
-    - Roles
-    - Permissions
-    - Groups
+  - Permissions
+    - RBAC
+    - ABAC
+- Organizations management
+  - Inviting users
+  - Billing managers
+  - Admins
 - Subscription
   - Billing
   - Plans
