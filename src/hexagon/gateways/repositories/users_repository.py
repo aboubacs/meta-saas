@@ -10,6 +10,10 @@ class UsersRepository(abc.ABC):
         ...
 
     @abc.abstractmethod
+    def get_by_email(self, email: str) -> Optional[User]:
+        ...
+
+    @abc.abstractmethod
     def add(self, user: User) -> None:
         ...
 

@@ -11,3 +11,8 @@ class RegisterUserCommand(BaseModel):
 class ActivateUserCommand(BaseModel):
     user_id: str
     token: str
+
+
+class LoginWithPasswordCommand(BaseModel):
+    email: EmailStr
+    password: SecretStr

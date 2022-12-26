@@ -7,10 +7,12 @@ from src.hexagon.gateways.repositories.instances_repository import InstancesRepo
 from src.hexagon.gateways.repositories.users_repository import UsersRepository
 from src.hexagon.models.user import User
 from src.hexagon.services import jwt
-from src.hexagon.services.hashing import hash_str
+from src.hexagon.services.hashing import hash_str, verify_hash
+from src.hexagon.services.jwt import encode_jwt
 from src.hexagon.use_cases.instance_exceptions import InstanceDoesNotExist
-from src.hexagon.use_cases.user_commands import RegisterUserCommand, ActivateUserCommand
-from src.hexagon.use_cases.user_exceptions import UserAlreadyActivated, UserDoesNotExist, InvalidActivationToken
+from src.hexagon.use_cases.user_commands import RegisterUserCommand, ActivateUserCommand, LoginWithPasswordCommand
+from src.hexagon.use_cases.user_exceptions import UserAlreadyActivated, UserDoesNotExist, InvalidActivationToken, \
+    InvalidCredentials
 from src.infrastructure.container import Container
 
 instances_repository: InstancesRepository = Provide[Container.instances_repository]
@@ -54,3 +56,12 @@ def _verify_token(activate_user_command):
         raise InvalidActivationToken(activate_user_command.user_id)
     if decoded_jwt["sub"] != activate_user_command.user_id:
         raise InvalidActivationToken(activate_user_command.user_id)
+
+
+def login_with_password(command: LoginWithPasswordCommand) -> str:
+    user = users_repository.get_by_email(command.email)
+    if not user:
+        raise InvalidCredentials()
+    if not verify_hash(command.password.get_secret_value(), user.hashed_password):
+        raise InvalidCredentials()
+    return encode_jwt(user.id)

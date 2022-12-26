@@ -11,6 +11,12 @@ class InMemoryUsersRepository(UsersRepository):
     def get(self, user_id: str) -> Optional[User]:
         return self.users.get(user_id)
 
+    def get_by_email(self, email: str) -> Optional[User]:
+        for user in self.users.values():
+            if user.email == email:
+                return user
+        return None
+
     def add(self, user: User) -> None:
         if user.id in self.users:
             raise UserIdAlreadyExists(user.id)
