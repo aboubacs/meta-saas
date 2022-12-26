@@ -12,6 +12,8 @@ message_bus: MessageBus = Provide[Container.message_bus]
 
 
 def create_organization(command: CreateOrganizationCommand, user: User) -> None:
-    organization = Organization(id=command.id, name=command.name, owner_user_id=user.id)
+    organization = Organization(id=command.id, name=command.name, owner_user_id=user.id, instance_id=user.instance_id)
     organizations_repository.add(organization)
-    message_bus.publish(OrganizationCreated(id=organization.id, name=organization.name, owner_user_id=organization.owner_user_id))
+    message_bus.publish(OrganizationCreated(organization_id=organization.id, name=organization.name,
+                                            owner_user_id=organization.owner_user_id,
+                                            instance_id=user.instance_id))

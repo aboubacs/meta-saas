@@ -30,7 +30,7 @@ def register_user(register_user_command: RegisterUserCommand):
         hashed_password=hash_str(register_user_command.password.get_secret_value()),
     )
     users_repository.add(user)
-    message_bus.publish(UserRegistered(id=user.id, email=user.email, instance_id=user.instance_id))
+    message_bus.publish(UserRegistered(user_id=user.id, email=user.email, instance_id=user.instance_id))
 
 
 def activate_user(activate_user_command: ActivateUserCommand):

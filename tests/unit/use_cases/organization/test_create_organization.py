@@ -17,6 +17,7 @@ def test_should_create_organization_with_the_right_name_and_owner_id(organizatio
     assert organization.id == "1"
     assert organization.name == "test-organization"
     assert organization.owner_user_id == user.id
+    assert organization.instance_id == user.instance_id
 
 
 def test_should_raise_if_organization_id_already_exists(organizations_repository, command, user):
@@ -29,6 +30,7 @@ def test_should_emit_organization_created_event(message_bus, user, command):
     create_organization(command, user)
     assert message_bus.messages
     assert isinstance(message_bus.messages[0], OrganizationCreated)
-    assert message_bus.messages[0].id == "1"
+    assert message_bus.messages[0].organization_id == "1"
     assert message_bus.messages[0].name == "test-organization"
     assert message_bus.messages[0].owner_user_id == user.id
+    assert message_bus.messages[0].instance_id == user.instance_id

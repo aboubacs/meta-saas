@@ -9,13 +9,13 @@ from src.hexagon.use_cases.user_use_cases import register_user
 
 @pytest.fixture
 def command(instance):
-    return RegisterUserCommand(instance_id=instance.id, id="1", email="test-user@email.com", password="azer1234")
+    return RegisterUserCommand(instance_id=instance.id, id="user-1", email="test-user@email.com", password="azer1234")
 
 
 def test_should_register_a_user_in_an_instance(command, instance, users_repository):
     register_user(command)
-    user = users_repository.get("1")
-    assert user.id == "1"
+    user = users_repository.get("user-1")
+    assert user.id == "user-1"
     assert user.email == "test-user@email.com"
     assert user.instance_id == instance.id
     assert user.hashed_password is not None
@@ -45,6 +45,6 @@ def test_should_emit_user_created_event(message_bus, command):
     register_user(command)
     assert message_bus.messages
     assert isinstance(message_bus.messages[0], UserRegistered)
-    assert message_bus.messages[0].id == "1"
+    assert message_bus.messages[0].user_id == "user-1"
     assert message_bus.messages[0].email == "test-user@email.com"
     assert message_bus.messages[0].instance_id == command.instance_id
